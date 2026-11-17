@@ -1,0 +1,66 @@
+{
+  "name": "codex-commit-message",
+  "displayName": "Codex Commit Message",
+  "description": "Generate complete Git commit messages from repository changes using the local Codex CLI.",
+  "version": "0.2.0",
+  "publisher": "chloe",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:codexCommit.generateMessage"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "codexCommit.generateMessage",
+        "title": "Generate Commit Message with Codex",
+        "category": "Codex",
+        "icon": {
+          "light": "resources/codex-dark.svg",
+          "dark": "resources/codex-light.svg"
+        }
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "codexCommit.generateMessage",
+          "when": "scmProvider == git",
+          "group": "navigation@2",
+          "icon": {
+            "light": "resources/codex-dark.svg",
+            "dark": "resources/codex-light.svg"
+          }
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Codex Commit Message",
+      "properties": {
+        "codexCommit.codexPath": {
+          "type": "string",
+          "default": "/home/px/.local/bin/codex",
+          "description": "Path to the Codex CLI executable."
+        },
+        "codexCommit.maxDiffCharacters": {
+          "type": "number",
+          "default": 60000,
+          "minimum": 5000,
+          "maximum": 200000,
+          "description": "Maximum change text sent to Codex."
+        }
+      }
+    }
+  }
+}
